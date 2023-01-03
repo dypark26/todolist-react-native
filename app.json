@@ -12,7 +12,8 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/97cab600-1552-46b0-9b0e-39092cb48775"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -28,6 +29,15 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "97cab600-1552-46b0-9b0e-39092cb48775"
+      }
+    },
+    "owner": "qkrekdud26",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }
