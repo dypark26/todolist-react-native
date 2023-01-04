@@ -15,9 +15,7 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/97cab600-1552-46b0-9b0e-39092cb48775"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -35,7 +33,6 @@
         "projectId": "97cab600-1552-46b0-9b0e-39092cb48775"
       }
     },
-    "owner": "qkrekdud26",
     "runtimeVersion": {
       "policy": "sdkVersion"
     }

@@ -5,79 +5,13 @@ import {
   TextInput,
   ScrollView,
 } from "react-native";
-import { useEffect, useState } from "react";
-import uuid from "react-native-uuid";
 import ToDoCard from "./components/ToDoCard";
-import { initializeApp } from "firebase/app";
 import Tabs from "./components/Tabs";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  onSnapshot,
-  query,
-  collection,
-  doc,
-  orderBy,
-  addDoc,
-  getDoc,
-  getDocs,
-  updateDoc,
-  deleteDoc,
-} from "firebase/firestore";
-import { dbService } from "./firebase";
+import useTodo from "./hooks/useTodo";
 
 const App = () => {
-  const [todos, setTodos] = useState([]);
-  const [category, setCategory] = useState("");
-  const [content, setContent] = useState("");
-
-  // todos 의 내용이 바뀔 때마다 스토리지에서 get
-  useEffect(() => {
-    // onSnapshot API 를 사용해 "todos" 라는 이름의 컬렉션의 값이 변경될 때마다,
-    // todos 컬렉션 내부의 모든 document 들을 불러와서,
-    // createdAt 의 내림차순으로 정렬해 setTodos 한다.
-    const q = query(
-      collection(dbService, "todos"),
-      orderBy("createdAt", "desc")
-    );
-
-    onSnapshot(q, (snapshot) => {
-      const newTodos = snapshot.docs.map((doc) => {
-        const newTodo = { id: doc.id, ...doc.data() };
-        return newTodo;
-      });
-      setTodos(newTodos);
-    });
-
-    // 처음 마운트 됐을 때 스토리지에서 데이터 get
-    const getCategory = async () => {
-      const snapshot = await getDoc(
-        doc(dbService, "category", "currentCategory")
-      );
-      setCategory(snapshot.data().category);
-    };
-    getCategory();
-  }, []);
-
-  // 카테고리 값이 바뀔 때마다 스토리지에 create
-  const setCat = async (cat) => {
-    setCategory(cat);
-    await updateDoc(doc(dbService, "category", "currentCategory"), {
-      category: cat,
-    });
-  };
-
-  const newTodo = {
-    content,
-    isDone: false,
-    category,
-    createdAt: Date.now(),
-  };
-
-  // 새로운 todo 를 추가
-  const addTodo = () => {
-    addDoc(collection(dbService, "todos"), newTodo);
-    setContent("");
-  };
+  const { addTodo, content, setContent, category, setCat, todos, setTodos } =
+    useTodo();
 
   return (
     <SafeAreaView style={Styles.backgorund}>
@@ -97,7 +31,7 @@ const App = () => {
           />
         </View>
         <ScrollView style={Styles.listWrapper}>
-          {todos.map((todo) => {
+          {todos?.map((todo) => {
             if (category === todo.category)
               return (
                 <ToDoCard
