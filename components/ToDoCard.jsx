@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import {
   StyleSheet,
   View,
@@ -11,7 +11,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { dbService } from "../firebase";
-import { async } from "@firebase/util";
 
 const ToDoList = ({ todo, todos, setTodos }) => {
   const [editText, setEditText] = useState(todo.content);
